@@ -5,6 +5,9 @@ RUN apt-get update &&  \
     apt-get install -y nkf &&  \
     apt-get install -y default-jdk
 
+ADD . /code
+WORKDIR /code
+
 # poetryをインストール
 RUN pip install poetry
 RUN poetry config virtualenvs.create false

@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "secure-interpreter"
+name = "secure-interpreter-webssh"
 version = "0.1.0"
 description = ""
 authors = ["Your Name <you@example.com>"]
@@ -8,9 +8,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "3.11.3"
-open-interpreter = "0.2.3"
-gunicorn = "^21.2.0"
-flask = "^3.0.2"
+webssh = "^1.6.2"
 
 
 [build-system]
