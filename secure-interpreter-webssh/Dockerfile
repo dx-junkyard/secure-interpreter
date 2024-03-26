@@ -13,4 +13,4 @@ COPY pyproject.toml poetry.lock ./
 # 依存関係をインストールする
 RUN poetry install
 
-ENTRYPOINT [ "wssh" ] 
+ENTRYPOINT [ "wssh", "--port=80" ] 
