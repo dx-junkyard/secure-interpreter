@@ -1,7 +1,8 @@
 # secure-interpreter
 
 ## 概要
-secure-interpreterは、クローズドな環境から安全に利用できるOpenInterpreter環境を提供するOSSです。このプロジェクトは2つのDockerイメージを提供しており、ユーザーはお好みのホスティングプラットフォームにこれらをデプロイすることで環境を構築できます。
+secure-interpreterは、クローズドな環境から安全に利用できるOpenInterpreter環境を提供するOSSです。  
+このプロジェクトは2つのDockerイメージを提供しており、ユーザーはお好みのホスティングプラットフォームにこれらをデプロイすることで環境を構築できます。
 
 ## インストール方法
 - **open-interpreter-ssh-server**: 
@@ -22,7 +23,7 @@ docker run -it --rm --name secure-interpreter-webssh -p 80:80 secure-interpreter
 ```
 
 ## 設定とカスタマイズ
-ホスティングサービスは自由に選択できます。少なくともAzureでは起動確認ができています。
+ホスティングサービスは自由に選択できます。少なくともAzureでは起動確認ができています。  
 例: Azureでの構成例
 ![AzureHostingExample.jpg](https://raw.githubusercontent.com/dx-junkyard/secure-interpreter/main/docs/AzureHostingExample.jpg)
 
