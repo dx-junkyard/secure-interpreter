@@ -22,7 +22,9 @@ docker run -it --rm --name secure-interpreter-webssh -p 80:80 secure-interpreter
 ```
 
 ## 設定とカスタマイズ
-- ホスティングサービスは自由に選択できます。少なくともAzureでは起動確認ができています。
+ホスティングサービスは自由に選択できます。少なくともAzureでは起動確認ができています。
+例: Azureでの構成例
+![AzureHostingExample.jpg](https://raw.githubusercontent.com/dx-junkyard/secure-interpreter/main/docs/AzureHostingExample.jpg)
 
 ## ライセンス
 このプロジェクトは [AGPL 3.0](https://www.gnu.org/licenses/agpl-3.0.html) のもとで公開されています。
