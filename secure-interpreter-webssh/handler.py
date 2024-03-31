@@ -495,7 +495,7 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
     """
     def get(self):
         if not self.authZ():
-            raise tornado.web.HTTPError(400)
+            raise tornado.web.HTTPError(403, 'Forbidden')
 
         hostname, username, password, port = self.getSSHUserInfo()
 
