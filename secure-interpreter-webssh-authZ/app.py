@@ -37,19 +37,20 @@ def authZ():
     return False
 
 
-# @app.route('/login')
-# def login():
-#     # if not authZ(): 
-#     #     return "NG", 401
+@app.route('/login')
+def login():
+    # if not authZ(): 
+    #     return "NG", 401
     
-#     hostname = '10.0.1.163'
-#     username = 'root'
-#     password = 'Docker!'
-#     password = base64.b64encode(password.encode()).decode()
-#     port = '2222'
-#     print(f'https://secure-interpreter-webssh.azurewebsites.net?hostname={hostname}&username={username}&password={password}&port={port}')
+    hostname = '10.0.1.163'
+    username = 'root'
+    password = 'Docker!'
+    password = base64.b64encode(password.encode()).decode()
+    port = '2222'
+    return redirect('http://localhost:8080')
+    print(f'https://secure-interpreter-webssh.azurewebsites.net?hostname={hostname}&username={username}&password={password}&port={port}')
 
-#     return "OK"
+    return "OK"
 
         
 if __name__ == '__main__':
