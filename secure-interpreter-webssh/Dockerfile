@@ -1,8 +1,7 @@
 FROM --platform=linux/x86_64 python:3.11.5
 
-# poetryをインストール
-RUN pip install poetry
-RUN poetry config virtualenvs.create false
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 ADD . /code
 WORKDIR /code
