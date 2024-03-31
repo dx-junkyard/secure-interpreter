@@ -489,6 +489,10 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
     def head(self):
         pass
 
+    """
+    認可判定を行い、アクセスを許可しないユーザーの場合400エラー
+    許可してるユーザーの場合、環境変数からhostname, usernameなどを取得しindex.htmlに渡す    
+    """
     def get(self):
         if not self.authZ():
             raise tornado.web.HTTPError(400)
@@ -532,6 +536,11 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
 
         self.write(self.result)
 
+    """
+    認可機能
+    azure easy authの認証後、アクセストークンを取得
+    ユーザーがALLOW_GROUP_OBJECT_IDに属しているか検証
+    """
     def authZ(self):
         access_token = self.request.headers.get('X-MS-TOKEN-AAD-ACCESS-TOKEN')
         if not access_token:
@@ -551,6 +560,13 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
                 return True
         return False
     
+    """
+    ssh接続のためにhostname, username, password, portを環境変数から取得
+    SSH_HOSTNAME : 接続先
+    SSH_USERNAME : ユーザ名
+    SSH_PASSWORD : パスワード
+    SSH_PORT : SSHのポート番号
+    """
     def getSSHUserInfo(self):
         hostname = os.getenv('SSH_HOSTNAME', '')
         username = os.getenv('SSH_USERNAME', '')
