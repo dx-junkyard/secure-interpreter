@@ -4,6 +4,10 @@
 secure-interpreterは、クローズドな環境から安全に利用できるOpenInterpreter環境を提供するOSSです。  
 このプロジェクトは2つのDockerイメージを提供しており、ユーザーはお好みのホスティングプラットフォームにこれらをデプロイすることで環境を構築できます。
 
+## Dockerイメージについて
+- open-interpreter-ssh-server : open-interpreterを搭載したssh接続可能なコンテナ
+- secure-interpreter-webssh : WebSSHを搭載し、open-interpreter-ssh-serverに安全にSSH接続できるコンテナ
+
 ## インストール方法
 - **open-interpreter-ssh-server**: 
   - `./open-interpreter-ssh-server/.env.sample` ファイルを参考に環境変数をホスティングサービスに設定してください。
