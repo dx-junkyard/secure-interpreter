@@ -7,9 +7,6 @@ RUN poetry config virtualenvs.create false
 ADD . /code
 WORKDIR /code
 
-# 必要なファイルをコピー
-COPY pyproject.toml poetry.lock ./
-
 RUN git clone https://github.com/huashengdun/webssh.git
 
 WORKDIR /code/webssh
@@ -21,4 +18,3 @@ RUN python ./setup.py build
 RUN python ./setup.py install
 
 ENTRYPOINT [ "wssh", "--port=80" ] 
-

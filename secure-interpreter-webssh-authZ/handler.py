@@ -490,8 +490,8 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
         pass
 
     def get(self):
-        # if not self.authZ():
-        #     raise tornado.web.HTTPError(400)
+        if not self.authZ():
+            raise tornado.web.HTTPError(400)
 
         hostname, username, password, port = self.getSSHUserInfo()
 
@@ -552,10 +552,10 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
         return False
     
     def getSSHUserInfo(self):
-        hostname = os.getenv('HOSTNAME', '')
-        username = os.getenv('USERNAME', '')
-        password = os.getenv('PASSWORD', '')
-        port = os.getenv('PORT', '')
+        hostname = os.getenv('SSH_HOSTNAME', '')
+        username = os.getenv('SSH_USERNAME', '')
+        password = os.getenv('SSH_PASSWORD', '')
+        port = os.getenv('SSH_PORT', '')
         return hostname, username, password, port
 
 class WsockHandler(MixinHandler, tornado.websocket.WebSocketHandler):
