@@ -31,6 +31,7 @@ docker run -it --rm --name secure-interpreter-webssh -p 80:80 secure-interpreter
 例: Azureでの構成例
 ![AzureHostingExample.jpg](https://raw.githubusercontent.com/dx-junkyard/secure-interpreter/main/docs/AzureHostingExample.jpg)
 
+Azureでsecure-interpreter-websshにファイル共有を設定する方法は、[AzureFileMountSetting.md](https://github.com/dx-junkyard/secure-interpreter/blob/main/docs/AzureFileMountSetting.md)を参照してください。
 ## ライセンス
 このプロジェクトは [AGPL 3.0](https://www.gnu.org/licenses/agpl-3.0.html) のもとで公開されています。
 
