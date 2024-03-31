@@ -9,7 +9,6 @@ app = Flask(__name__)
 def hello():
     return "hello"
 
-@app.route('/authZ')
 def authZ():
     # アクセストークンをリクエストヘッダから取得
     access_token = request.headers.get('X-MS-TOKEN-AAD-ACCESS-TOKEN')
@@ -36,6 +35,22 @@ def authZ():
     if allow_group_object_id in value: return True
 
     return False
+
+
+# @app.route('/login')
+# def login():
+#     # if not authZ(): 
+#     #     return "NG", 401
+    
+#     hostname = '10.0.1.163'
+#     username = 'root'
+#     password = 'Docker!'
+#     password = base64.b64encode(password.encode()).decode()
+#     port = '2222'
+#     print(f'https://secure-interpreter-webssh.azurewebsites.net?hostname={hostname}&username={username}&password={password}&port={port}')
+
+#     return "OK"
+
         
 if __name__ == '__main__':
     port = int(os.getenv('PORT', 5000))  # 環境変数PORTからポート番号を取得。デフォルトは5000番
