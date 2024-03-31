@@ -1,4 +1,4 @@
-FROM --platform=linux/x86_64 python:3.11.3
+FROM --platform=linux/x86_64 python:3.11.5
 
 # poetryをインストール
 RUN pip install poetry
@@ -7,10 +7,14 @@ RUN poetry config virtualenvs.create false
 ADD . /code
 WORKDIR /code
 
-# 必要なファイルをコピー
-COPY pyproject.toml poetry.lock ./
+RUN git clone https://github.com/huashengdun/webssh.git
 
-# 依存関係をインストールする
-RUN poetry install
+WORKDIR /code/webssh
+
+COPY index.html ./webssh/templates
+COPY handler.py ./webssh
+
+RUN python ./setup.py build
+RUN python ./setup.py install
 
 ENTRYPOINT [ "wssh", "--port=80" ] 
