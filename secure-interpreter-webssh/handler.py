@@ -2,7 +2,7 @@ import io
 import os
 import json
 import logging
-import requests
+import base64
 import socket
 import struct
 import traceback
@@ -490,16 +490,16 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
         pass
 
     """
-    認可判定を行い、アクセスを許可しないユーザーの場合400エラー
+    認可判定を行い、アクセスを許可しないユーザーの場合403エラー
     許可してるユーザーの場合、環境変数からhostname, usernameなどを取得しindex.htmlに渡す    
     """
     def get(self):
         if not self.authZ():
-            raise tornado.web.HTTPError(403, 'Forbidden')
+            self.render('page403.html')
+        else:
+            hostname, username, password, port = self.getSSHUserInfo()
 
-        hostname, username, password, port = self.getSSHUserInfo()
-
-        self.render('index.html', debug=self.debug, font=self.font, hostname=hostname, username=username, password=password, port=port)
+            self.render('index.html', debug=self.debug, font=self.font, hostname=hostname, username=username, password=password, port=port)
 
     @tornado.gen.coroutine
     def post(self):
@@ -538,27 +538,32 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
 
     """
     認可機能
-    azure easy authの認証後、アクセストークンを取得
-    ユーザーがALLOW_GROUP_OBJECT_IDに属しているか検証
+    azure easy authの認証後、ロールを取得
+    ユーザーがALLOW_ROLEのロールが渡されているか検証
     """
     def authZ(self):
-        access_token = self.request.headers.get('X-MS-TOKEN-AAD-ACCESS-TOKEN')
-        if not access_token:
-            return None
+        x_ms_client_principal = self.request.headers.get('x-ms-client-principal', '')
+        if not x_ms_client_principal:
+            return False
+            
+        allow_role = os.getenv('ALLOW_ROLE', '')
 
-        url = "https://graph.microsoft.com/v1.0/me/microsoft.graph.checkMemberObjects"
-        allow_group_object_id = os.getenv('ALLOW_GROUP_OBJECT_ID', '')
-        headers = {
-            'Authorization': 'Bearer ' + access_token,
-            'Content-Type': 'application/json'
-        }
+        user_roles = self.decodeUserRole(x_ms_client_principal)
 
-        response = requests.post(url, headers=headers, json={"ids": [allow_group_object_id]})
-        if response.status_code == 200:
-            res = response.json()
-            if allow_group_object_id in res.get('value', []):
-                return True
-        return False
+        if not user_roles or not allow_role == user_roles:
+            return False
+        return True
+
+    def decodeUserRole(self, encoded_claims):
+        decoded_claims = base64.b64decode(encoded_claims).decode('utf-8')
+        user_claims = json.loads(decoded_claims).get('claims', [])
+        
+        for claim in user_claims:
+            if claim['typ'] == 'roles':
+                return claim['val']
+
+        return ''    
+
     
     """
     ssh接続のためにhostname, username, password, portを環境変数から取得
